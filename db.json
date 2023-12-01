@@ -11,11 +11,6 @@
       "body": "typicode"
     },
     {
-      "id": 4,
-      "title": "json-server 4",
-      "body": "typicode"
-    },
-    {
       "id": 5,
       "title": "json-server 5",
       "body": "typicode"
@@ -34,6 +29,11 @@
       "title": "posts",
       "body": "posts",
       "id": 8
+    },
+    {
+      "title": "New post in my app:)",
+      "body": "New post in my app:)",
+      "id": 9
     }
   ],
   "comments": [],

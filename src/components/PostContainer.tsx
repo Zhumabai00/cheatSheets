@@ -14,9 +14,7 @@ export default function PostContainer() {
 	// })
 
 	useEffect(() => {
-		// setTimeout(() => {
-		// 	setLimit(3)
-		// }, 2000)
+
 	}, [])
 	const handleCreate = async () => {
 		const title = prompt()
