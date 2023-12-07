@@ -10,9 +10,7 @@ interface ITodo {
 
 	}
 }
-interface GetUsersQuery {
-	todos: ITodo[]
-}
+
 const AddTodo: FC = () => {
 	const [inputValue, setInputValue] = useState('');
 	const [AddTodo, { error }] = useMutation(ADD_TODO, {
