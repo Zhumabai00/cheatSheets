@@ -1,12 +1,14 @@
+import { useMutation } from '@apollo/client'
 import { Checkbox } from '@chakra-ui/react'
+import { DELETE_TODO, UPDATE_TODO } from '@src/apollo/todos'
 import React from 'react'
 import { Button, Form, InputGroup, Stack } from 'react-bootstrap'
 interface Props {
-	todo: {
-		id: number
-		title: string
-		completed: boolean
-	},
+	// todo: {
+	id: number
+	title: string
+	completed: boolean
+	// },
 	// ToggleTodo: () => void
 }
 interface UpdatePostData {
@@ -16,13 +18,35 @@ interface UpdatePostData {
 		title: string;
 	};
 }
-const TodoItem = ({ todo }: Props & UpdatePostData) => {
+const TodoItem = ({ id, completed, title }: Props) => {
+	const [ToggleTodo, { error: updateError }] = useMutation(UPDATE_TODO)
+	const [removeTodo, { error: deleteError }] = useMutation(DELETE_TODO, {
+		update(cache, { data: { removeTodo } }) {
+			cache.modify({
+				fields: {
+					allTodos(currentTodos = []) {
+						return currentTodos.filter((todo: { __ref: string }) => (
+							todo.__ref !== `Todo:${removeTodo.id}`
+						))
+					}
+				}
+			})
+		}
+	})
+	if (updateError) {
+		return <h2>Errore...</h2>
+	}
 	return (
 		<div>
 			<Stack direction="horizontal">
 				{/* <InputGroup.Checkbox /> */}
-				<Checkbox className="me-auto" style={{ padding: '0 10px' }} colorScheme='red' defaultChecked>
-					{todo.title}
+				<Checkbox onChange={() => ToggleTodo({
+					variables: {
+						id,
+						completed: !completed,
+					}
+				})} isChecked={completed} className="me-auto" style={{ padding: '0 10px' }} colorScheme='red'>
+					{title}
 				</Checkbox>
 				{/* <Form.Check
 					type='checkbox'
@@ -31,7 +55,11 @@ const TodoItem = ({ todo }: Props & UpdatePostData) => {
 					label={todo.id}
 					name="group1"
 				/> */}
-				<Button variant="primary">close</Button>
+				<Button onClick={() => removeTodo({
+					variables: {
+						id,
+					}
+				})} variant="primary">close</Button>
 			</Stack>
 		</div>
 	)

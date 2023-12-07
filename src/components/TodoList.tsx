@@ -27,8 +27,8 @@ interface UpdatePostData {
 
 
 const TodoList: FC = () => {
-	const { loading, error, data } = useQuery<GetUsersQuery>(ALL_TODO)
-	// const [ToggleTodo, { error: updateError }] = useMutation<UpdatePostData>(UPDATE_TODO)
+	const { loading, error, data } = useQuery(ALL_TODO)
+
 	if (loading) {
 		return <Spinner animation="grow" />
 	}
@@ -38,11 +38,10 @@ const TodoList: FC = () => {
 	return (
 		<div className='p-10 Todo'>
 			<Stack gap={3}>
-				{data && data.todos.map(todo => (
+				{data && data.todos.map((todo: ITodo) => (
 					<TodoItem
-						// onToggle={ToggleTodo}
 						key={todo.id}
-						todo={todo} />
+						{...todo} />
 				))}
 			</Stack>
 			<TotalCount />

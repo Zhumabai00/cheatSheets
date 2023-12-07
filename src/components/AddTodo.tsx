@@ -3,9 +3,12 @@ import { ADD_TODO, ALL_TODO } from '@src/apollo/todos';
 import React, { FC, useCallback, useState } from 'react'
 import { Button, Col, Row } from 'react-bootstrap';
 interface ITodo {
-	id: number
 	title: string
-	completed: boolean
+	__ref: {
+		completed: boolean
+		id: number
+
+	}
 }
 interface GetUsersQuery {
 	todos: ITodo[]
@@ -15,7 +18,18 @@ const AddTodo: FC = () => {
 	const [AddTodo, { error }] = useMutation(ADD_TODO, {
 		refetchQueries: [
 			{ query: ALL_TODO }
-		]
+		],
+		// update(cache, { data: { createTodo } }) {
+		// 	cache.modify({
+		// 		fields: {
+		// 			allTodos(currentTodos = []) {
+		// 				return currentTodos.filter((todo: ITodo) => (
+		// 					todo.title !== createTodo.title
+		// 				))
+		// 			}
+		// 		}
+		// 	})
+		// }
 		// update(cache, { data: { newTodo } }) {
 		// 	const { todos } = cache.readQuery<GetUsersQuery>({ query: ALL_TODO })
 
