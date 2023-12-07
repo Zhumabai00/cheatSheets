@@ -1,10 +1,25 @@
-import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "./hooks/redux"
 import { userSlice } from "./store/reducers/UserSlice"
 import { fetchUsers } from "./store/reducers/ActionCreators"
-import PostContainer from "@components/PostContainer"
-import PostContainer2 from "@components/PostContainer2"
+// import AddTodo from "@components/AddTodo"
+import TodoList from "@components/TodoList"
+import { Col, Container, Row, Stack } from 'react-bootstrap';
+import './App.scss'
 
+import {
+  ChakraBaseProvider,
+  extendBaseTheme,
+  theme as chakraTheme,
+} from '@chakra-ui/react'
+import AddTodo from "./components/AddTodo";
+
+const { Button } = chakraTheme.components
+
+const theme = extendBaseTheme({
+  components: {
+    Button,
+  },
+})
 function App() {
   // const { count } = useAppSelector(state => state.userReducer)
   // const { increment } = userSlice.actions
@@ -14,6 +29,7 @@ function App() {
   // useEffect(() => {
   //   dispatch(fetchUsers())
   // }, [])
+
   return (
     <>
       {/* <h1>{count}</h1>
@@ -21,10 +37,19 @@ function App() {
       {/* {isLoading && <h1>IS loading....</h1>}
       {error && <h1>{error}</h1>}
       {JSON.stringify(users, null, 2)} */}
-      <div style={{ display: 'flex' }}>
-        <PostContainer />
-        <PostContainer2 />
-      </div>
+
+      <ChakraBaseProvider theme={theme}>
+        <Container className="m">
+          <Row>
+            <Col>
+              <TodoList />
+            </Col>
+            <Col>
+              <AddTodo />
+            </Col>
+          </Row>
+        </Container>
+      </ChakraBaseProvider>
     </>
   )
 }

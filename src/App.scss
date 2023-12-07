@@ -1,0 +1,22 @@
+/* The following line can be included in a src/App.scss */
+// @import '~bootstrap/scss/bootstrap';
+
+* {
+	margin: 0;
+	box-sizing: border-box;
+	padding: 0;
+}
+
+.Todo {
+	padding: 15px;
+	border-radius: 8px;
+	transition: all 0.1s ease;
+	border-width: 2px;
+	border-style: solid;
+
+	border-color: transparent;
+
+	&:hover {
+		border-color: #bbbb;
+	}
+}
